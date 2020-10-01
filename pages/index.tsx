@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/Layout';
+import layoutStyles from '../styles/layout.module.css';
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
         <title>{siteTitle} | Login</title>
       </Head>
       <main>
-        <section>HELLO THIS IS THE HOME PAGE</section>
+        <section className={layoutStyles.grid}>HELLO THIS IS THE HOME PAGE</section>
       </main>
     </Layout>
   );
