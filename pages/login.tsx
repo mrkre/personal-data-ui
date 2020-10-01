@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/Layout';
-import layoutStyles from '../styles/layout.module.css';
+import Section from '../components/Section';
 
 export default function Login() {
   return (
@@ -8,7 +8,7 @@ export default function Login() {
       <Head>
         <title>{siteTitle} | Login</title>
       </Head>
-      <section className={layoutStyles.grid}>Login</section>
+      <Section>Login</Section>
     </Layout>
   );
 }

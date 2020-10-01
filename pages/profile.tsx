@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import Layout from '../components/Layout';
 import api from '../api/api';
 import { routes } from '../api/routes';
 import useSWR from 'swr';
 import { useAuth } from '../contexts/auth';
 import Router from 'next/router';
-import layoutStyles from '../styles/layout.module.css';
+import Layout from '../components/Layout';
+import Section from '../components/Section';
 
 export default function Profile() {
   const { isAuthenticated } = useAuth();
@@ -21,7 +21,7 @@ export default function Profile() {
 
   return (
     <Layout>
-      <section className={layoutStyles.grid}>Profile page</section>
+      <Section>Profile page</Section>
     </Layout>
   );
 }
