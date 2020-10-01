@@ -1,8 +1,11 @@
-import axios from 'axios';
+import Axios from 'axios';
 import Router from 'next/router';
+import getConfig from 'next/config';
 
-const api = axios.create({
-  baseURL: process.env.API_URL,
+const { publicRuntimeConfig } = getConfig();
+
+const api = Axios.create({
+  baseURL: publicRuntimeConfig.apiUrl,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -12,7 +15,7 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   function (error) {
-    if (401 === error.response.status) {
+    if (error.response?.status === 401) {
       Router.push('/login');
     } else {
       return Promise.reject(error);

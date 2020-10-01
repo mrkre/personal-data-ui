@@ -26,14 +26,34 @@ body {
   }
   
   button {
-    @apply bg-blue-200 px-10 py-3 mb-2 rounded border-none;
+    @apply bg-teal-100 bg-opacity-75 px-10 py-3 mb-2 rounded border-none shadow-md;
   }
   
   button:hover {
-    @apply bg-blue-300;
+    @apply bg-teal-100;
+  }
+  
+  input, button, select {
+    @apply appearance-none;
+  }
+  
+  input {
+    @apply bg-white shadow-inner shadow-md rounded-md p-2 w-full mb-6;
+  }
+  
+  input.error {
+    @apply mb-0;
+  }
+  
+  .text-danger {
+    @apply bg-red-200 text-red-400 bg-opacity-50 px-2 py-2 mb-6 w-full rounded text-left;
   }
 }
 
 main {
   @apply min-h-screen;
+}
+
+.error {
+  @apply bg-red-100 p-2 mb-2;
 }
