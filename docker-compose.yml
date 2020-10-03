@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  personal-data-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: personal-data-ui
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - SITE=http://localhost:3000
+      - API_URL=http://localhost:8000
