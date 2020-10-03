@@ -52,6 +52,7 @@ body {
   
   .text-danger {
     @apply bg-red-200 text-red-400 bg-opacity-50 px-2 py-2 mb-6 w-full rounded text-left;
+    word-break: break-word;
   }
   
   a {

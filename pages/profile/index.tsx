@@ -5,11 +5,12 @@ import Link from 'next/link';
 import api from '../../api/api';
 import { routes } from '../../api/routes';
 import { useAuth } from '../../contexts/auth';
-import Layout from '../../components/Layout';
+import Layout, { siteTitle } from '../../components/Layout';
 import Section from '../../components/Section';
 import Card from '../../components/Card';
-import { ProfileType } from '../../types/profile';
+import { ProfileResponse } from '../../types/profile';
 import styles from '../../styles/profile.module.css';
+import Head from 'next/head';
 
 const substring = (string) => (string ? `${string.substring(0, 24)}` : '-');
 
@@ -17,6 +18,10 @@ const displayString = (encrypted, string) => (encrypted ? substring(string) : st
 
 export default function Profile() {
   const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (!isAuthenticated) Router.push('/login');
+  }, [isAuthenticated]);
 
   const [key, setKey] = useState(null);
 
@@ -27,10 +32,6 @@ export default function Profile() {
 
   const params = useMemo(() => ({ key }), [key]);
 
-  useEffect(() => {
-    if (!isAuthenticated) Router.push('/login');
-  }, [isAuthenticated]);
-
   const { data, error } = useSWR(isAuthenticated ? [routes.profile, params] : null, (url, params) =>
     api.get(url, { params }),
   );
@@ -38,10 +39,14 @@ export default function Profile() {
   if (error) return <p>Error loading...</p>;
   if (!data) return <p>Loading</p>;
 
-  const { firstName, lastName, dateOfBirth, address, phone, encrypted, success } = data.data as ProfileType;
+  const { firstName, lastName, dateOfBirth, address, phone, encrypted, success } = data.data as ProfileResponse;
 
   return (
     <Layout>
+      <Head>
+        <title>{siteTitle} | Profile</title>
+      </Head>
+
       <Section>
         <Card>
           <table className={styles.table}>
@@ -126,7 +131,7 @@ export default function Profile() {
               ) : (
                 <></>
               )}
-              {!success ? (
+              {key && !success ? (
                 <tr>
                   <td colSpan={2}>
                     <span className="text-danger">Error decrypting - check key</span>

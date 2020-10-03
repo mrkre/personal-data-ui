@@ -12,6 +12,13 @@ export interface ProfileType {
   dateOfBirth?: Date;
   address?: AddressType;
   phone?: string;
+}
+
+export interface ProfileResponse extends ProfileType {
   encrypted: boolean;
   success?: boolean;
+}
+
+export interface ProfileForm extends ProfileType {
+  key: string;
 }

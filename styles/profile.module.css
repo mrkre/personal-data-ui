@@ -6,6 +6,10 @@
   @apply px-2 py-4 align-middle;
 }
 
+.table input {
+  @apply mb-0;
+}
+
 .titleCell {
   @apply font-bold;
 }
