@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Head from 'next/head';
 import Router from 'next/router';
-import Link from 'next/link';
 import cx from 'classnames';
 import Layout, { siteTitle } from '../components/Layout';
 import Section from '../components/Section';
@@ -12,12 +11,13 @@ import { useAuth } from '../contexts/auth';
 import api from '../api/api';
 import { routes } from '../api/routes';
 
-type LoginForm = {
+type RegisterForm = {
   email: string;
   password: string;
+  confirmPassword: string;
 };
 
-export default function Login() {
+export default function Register() {
   const { setToken, isAuthenticated } = useAuth();
 
   const { handleSubmit, register, errors, formState } = useForm();
@@ -28,9 +28,9 @@ export default function Login() {
     if (isAuthenticated) Router.push('/profile');
   }, [isAuthenticated]);
 
-  const onSubmit = async ({ email, password }: LoginForm) => {
+  const onSubmit = async ({ email, confirmPassword, password }: RegisterForm) => {
     await api
-      .post(routes.auth.login, { email, password })
+      .post(routes.auth.register, { email, confirmPassword, password })
       .then(async (res) => {
         await setToken({ token: res.data.token });
       })
@@ -42,12 +42,12 @@ export default function Login() {
   return (
     <Layout>
       <Head>
-        <title>{siteTitle} | Login</title>
+        <title>{siteTitle} | Register</title>
       </Head>
       <Section>
         <Card>
           <form className="min-w-md" onSubmit={handleSubmit(onSubmit)}>
-            <h2>Login</h2>
+            <h2>Register</h2>
 
             <div className="w-full">
               <input
@@ -79,18 +79,24 @@ export default function Login() {
               {errors.password && <div className="text-danger">{errors.password.message}</div>}
             </div>
 
-            <div className="mb-8">
+            <div className="w-full">
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                placeholder="Confirm Password"
+                className={cx({ error: errors.confirmPassword })}
+                ref={register({ required: 'Required' })}
+              />
+              {errors.confirmPassword && <div className="text-danger">{errors.confirmPassword.message}</div>}
+            </div>
+
+            <div>
               <button className="w-full primary" type="submit" disabled={formState.isSubmitting}>
                 Submit
               </button>
 
               <FlashError error={submitError} />
-            </div>
-
-            <div>
-              <p>
-                No account? <Link href="/register">Register here</Link>
-              </p>
             </div>
           </form>
         </Card>

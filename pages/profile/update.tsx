@@ -26,7 +26,7 @@ export default function UpdateProfile() {
   const [submitError, setSubmitError] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(null);
 
-  const onSubmit = async (params: ProfileForm) => {
+  const onSubmit = async (params: Partial<ProfileForm>) => {
     const { key, ...profileParams } = params;
     const { address, ...restOfProfile } = profileParams;
     await api
