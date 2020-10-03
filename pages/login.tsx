@@ -26,7 +26,7 @@ export default function Login() {
     await api
       .post(routes.auth.login, { email, password })
       .then(async (res) => {
-        await setToken(res.data.token);
+        await setToken({ token: res.data.token });
       })
       .catch((err) => {
         setSubmitError(err?.response?.data.message || err.message);
@@ -78,7 +78,7 @@ export default function Login() {
                 Submit
               </button>
 
-              {submitError && <div className="text-danger mb-0">{submitError}</div>}
+              {submitError && <div className="text-danger mt-3 mb-0">{submitError}</div>}
             </div>
           </form>
         </Card>
