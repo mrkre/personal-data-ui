@@ -13,4 +13,5 @@ export interface ProfileType {
   address?: AddressType;
   phone?: string;
   encrypted: boolean;
+  success?: boolean;
 }

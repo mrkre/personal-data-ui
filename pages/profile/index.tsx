@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import useSWR from 'swr';
 import Router from 'next/router';
 import Link from 'next/link';
@@ -18,16 +18,27 @@ const displayString = (encrypted, string) => (encrypted ? substring(string) : st
 export default function Profile() {
   const { isAuthenticated } = useAuth();
 
+  const [key, setKey] = useState(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setKey(e.target.value);
+  };
+
+  const params = useMemo(() => ({ key }), [key]);
+
   useEffect(() => {
     if (!isAuthenticated) Router.push('/login');
   }, [isAuthenticated]);
 
-  const { data, error } = useSWR(isAuthenticated ? routes.profile : null, api.get);
+  const { data, error } = useSWR(isAuthenticated ? [routes.profile, params] : null, (url, params) =>
+    api.get(url, { params }),
+  );
 
   if (error) return <p>Error loading...</p>;
   if (!data) return <p>Loading</p>;
 
-  const { firstName, lastName, dateOfBirth, address, phone, encrypted } = data.data as ProfileType;
+  const { firstName, lastName, dateOfBirth, address, phone, encrypted, success } = data.data as ProfileType;
 
   return (
     <Layout>
@@ -59,9 +70,7 @@ export default function Profile() {
               </tr>
 
               <tr>
-                <td className={styles.titleCell}>
-                  Address
-                </td>
+                <td className={styles.titleCell}>Address</td>
                 <td>&nbsp;</td>
               </tr>
 
@@ -99,10 +108,29 @@ export default function Profile() {
             <tfoot className="border-t-2 border-gray-200">
               {encrypted ? (
                 <tr>
-                  <>
-                    <td>Data is encrypted</td>
-                    <td>{encrypted && <input className="mb-0" type="text" placeholder="Decrypt with your key" />}</td>
-                  </>
+                  <td>Data is encrypted</td>
+                  <td>
+                    {encrypted && (
+                      <form>
+                        <input
+                          className="mb-0"
+                          type="text"
+                          placeholder="Decrypt with your key"
+                          id="key"
+                          onBlur={handleSubmit}
+                        />
+                      </form>
+                    )}
+                  </td>
+                </tr>
+              ) : (
+                <></>
+              )}
+              {!success ? (
+                <tr>
+                  <td colSpan={2}>
+                    <span className="text-danger">Error decrypting - check key</span>
+                  </td>
                 </tr>
               ) : (
                 <></>
