@@ -1,8 +1,11 @@
 import Head from 'next/head';
+import { useAuth } from '../contexts/auth';
 
 export const siteTitle = 'Personal Data';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated, logout } = useAuth();
+
   return (
     <>
       <Head>
@@ -12,7 +15,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       <header />
 
-      {children}
+      <div className="grid grid-cols-1 p-24 min-h-screen">
+        <main className="flex justify-center items-center">{children}</main>
+
+        <footer className="p-12 text-center">
+          {isAuthenticated ? (
+            <form onSubmit={logout}>
+              <button className="transparent">Logout</button>
+            </form>
+          ) : (
+            <div />
+          )}
+        </footer>
+      </div>
     </>
   );
 }

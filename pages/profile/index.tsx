@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import api from '../api/api';
-import { routes } from '../api/routes';
 import useSWR from 'swr';
-import { useAuth } from '../contexts/auth';
 import Router from 'next/router';
-import Layout from '../components/Layout';
-import Section from '../components/Section';
+import api from '../../api/api';
+import { routes } from '../../api/routes';
+import { useAuth } from '../../contexts/auth';
+import Layout from '../../components/Layout';
+import Section from '../../components/Section';
 
-export default function Profile() {
+export default function Index() {
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
