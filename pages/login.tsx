@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Head from 'next/head';
 import Router from 'next/router';
+import Link from 'next/link';
 import cx from 'classnames';
 import Layout, { siteTitle } from '../components/Layout';
 import Section from '../components/Section';
@@ -9,7 +10,6 @@ import Card from '../components/Card';
 import { useAuth } from '../contexts/auth';
 import api from '../api/api';
 import { routes } from '../api/routes';
-import { useState } from 'react';
 
 type LoginForm = {
   email: string;
@@ -84,6 +84,13 @@ export default function Login() {
               </button>
 
               {submitError && <div className="text-danger mt-3 mb-0">{submitError}</div>}
+            </div>
+
+            <div>
+              <p>No account?</p>
+              <p>
+                <Link href="/register">Register here</Link>
+              </p>
             </div>
           </form>
         </Card>
