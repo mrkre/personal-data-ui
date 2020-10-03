@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import Head from 'next/head';
 import { useForm } from 'react-hook-form';
+import Head from 'next/head';
+import Router from 'next/router';
 import cx from 'classnames';
 import Layout, { siteTitle } from '../components/Layout';
 import Section from '../components/Section';
@@ -16,11 +17,15 @@ type LoginForm = {
 };
 
 export default function Login() {
-  const { setToken } = useAuth();
+  const { setToken, isAuthenticated } = useAuth();
 
   const { handleSubmit, register, errors, formState } = useForm();
 
   const [submitError, setSubmitError] = useState(null);
+
+  useEffect(() => {
+    if (isAuthenticated) Router.push('/profile');
+  }, [isAuthenticated]);
 
   const onSubmit = async ({ email, password }: LoginForm) => {
     await api
@@ -40,9 +45,9 @@ export default function Login() {
       </Head>
       <Section>
         <Card>
-          <h2>Login</h2>
+          <form className="min-w-md" onSubmit={handleSubmit(onSubmit)}>
+            <h2>Login</h2>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="w-full">
               <input
                 id="email"
@@ -74,7 +79,7 @@ export default function Login() {
             </div>
 
             <div>
-              <button className="w-full" type="submit" disabled={formState.isSubmitting}>
+              <button className="w-full primary" type="submit" disabled={formState.isSubmitting}>
                 Submit
               </button>
 

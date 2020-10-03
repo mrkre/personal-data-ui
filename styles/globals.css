@@ -25,16 +25,21 @@ body {
     @apply mb-4;
   }
   
-  button {
+  button.primary {
     @apply bg-teal-100 bg-opacity-75 px-10 py-3 mb-2 rounded border-none shadow-md;
   }
   
-  button:hover {
+  button.primary:hover {
     @apply bg-teal-100;
   }
   
-  input, button, select {
-    @apply appearance-none;
+  button.transparent {
+    @apply bg-transparent underline;
+  }
+  
+  input, button, select,
+  input:active, button:active, select:active {
+    @apply appearance-none outline-none;
   }
   
   input {
@@ -44,14 +49,20 @@ body {
   input.error {
     @apply mb-0;
   }
+
+  .text-success {
+    @apply bg-green-200 text-green-400 bg-opacity-50 px-2 py-2 mb-6 w-full rounded text-left;
+    word-break: break-word;
+  }
   
   .text-danger {
     @apply bg-red-200 text-red-400 bg-opacity-50 px-2 py-2 mb-6 w-full rounded text-left;
+    word-break: break-word;
   }
-}
-
-main {
-  @apply min-h-screen;
+  
+  a {
+    @apply underline;
+  }
 }
 
 .error {

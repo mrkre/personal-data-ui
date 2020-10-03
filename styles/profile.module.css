@@ -1,0 +1,15 @@
+.table {
+  @apply table-fixed min-w-2xl;
+}
+
+.table td {
+  @apply px-2 py-4 align-middle;
+}
+
+.table input {
+  @apply mb-0;
+}
+
+.titleCell {
+  @apply font-bold;
+}
