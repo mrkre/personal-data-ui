@@ -16,7 +16,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <header />
 
       <div className="grid grid-cols-1 p-24 min-h-screen">
-        <main className="flex justify-center items-center">{children}</main>
+        <main className="flex flex-col flex-wrap justify-center items-center">{children}</main>
 
         <footer className="p-12 text-center">
           {isAuthenticated ? (

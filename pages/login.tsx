@@ -45,9 +45,9 @@ export default function Login() {
       </Head>
       <Section>
         <Card>
-          <h2>Login</h2>
+          <form className="min-w-md" onSubmit={handleSubmit(onSubmit)}>
+            <h2>Login</h2>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="w-full">
               <input
                 id="email"

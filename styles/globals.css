@@ -37,7 +37,8 @@ body {
     @apply bg-transparent underline;
   }
   
-  input, button, select {
+  input, button, select,
+  input:active, button:active, select:active {
     @apply appearance-none outline-none;
   }
   
@@ -51,6 +52,10 @@ body {
   
   .text-danger {
     @apply bg-red-200 text-red-400 bg-opacity-50 px-2 py-2 mb-6 w-full rounded text-left;
+  }
+  
+  a {
+    @apply underline;
   }
 }
 
