@@ -5,6 +5,19 @@ module.exports = {
   },
   purge: [],
   theme: {
+    minWidth: {
+      xs: '20rem',
+      sm: '24rem',
+      md: '28rem',
+      lg: '32rem',
+      xl: '36rem',
+      '2xl': '42rem',
+      '3xl': '48rem',
+      '4xl': '56rem',
+      '5xl': '64rem',
+      '6xl': '72rem',
+      full: '100%',
+    },
     extend: {
       fontSize: {
         xs: '.75rem',
@@ -18,7 +31,6 @@ module.exports = {
         '4xl': '3rem',
         '5xl': '4rem',
         '6xl': '5rem',
-        '7xl': '6rem',
       },
     },
   },
