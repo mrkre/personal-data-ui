@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       <header />
 
-      <main>{children}</main>
+      {children}
     </>
   );
 }
