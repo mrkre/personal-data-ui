@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import { pickBy } from 'lodash';
 import Router from 'next/router';
@@ -24,6 +24,7 @@ export default function UpdateProfile() {
   const { handleSubmit, register, errors, formState } = useForm();
 
   const [submitError, setSubmitError] = useState(null);
+  const [submitSuccess, setSubmitSuccess] = useState(null);
 
   const onSubmit = async (params: ProfileForm) => {
     const { key, ...profileParams } = params;
@@ -32,12 +33,12 @@ export default function UpdateProfile() {
       .post(routes.profile, {
         key,
         profile: {
-          ...(address && pickBy(address)),
+          ...(address && { address: pickBy(address) }),
           ...pickBy(restOfProfile),
         },
       })
       .then(() => {
-        // do nothing
+        setSubmitSuccess(true);
       })
       .catch((err) => {
         setSubmitError(err?.response?.data.message || err.message);
@@ -52,8 +53,6 @@ export default function UpdateProfile() {
 
       <Section>
         <Card>
-          {submitError && <div className="text-danger">{submitError}</div>}
-
           <form onSubmit={handleSubmit(onSubmit)}>
             <table className={styles.table}>
               <thead>
@@ -210,6 +209,14 @@ export default function UpdateProfile() {
                     <button className="primary" type="submit" disabled={formState.isSubmitting}>
                       Save
                     </button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colSpan={2}>
+                    {submitSuccess && <div className="text-success">Form saved</div>}
+
+                    {submitError && <div className="text-danger">{submitError}</div>}
                   </td>
                 </tr>
               </tbody>
