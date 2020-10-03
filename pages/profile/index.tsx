@@ -14,7 +14,7 @@ import Head from 'next/head';
 
 const substring = (string) => (string ? `${string.substring(0, 24)}` : '-');
 
-const displayString = (encrypted, string) => (encrypted ? substring(string) : string);
+const displayString = (encrypted, string) => (encrypted ? substring(string) : string || '-');
 
 export default function Profile() {
   const { isAuthenticated } = useAuth();

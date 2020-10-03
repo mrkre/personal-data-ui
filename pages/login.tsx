@@ -7,6 +7,7 @@ import cx from 'classnames';
 import Layout, { siteTitle } from '../components/Layout';
 import Section from '../components/Section';
 import Card from '../components/Card';
+import FlashError from '../components/FlashError';
 import { useAuth } from '../contexts/auth';
 import api from '../api/api';
 import { routes } from '../api/routes';
@@ -34,7 +35,7 @@ export default function Login() {
         await setToken({ token: res.data.token });
       })
       .catch((err) => {
-        setSubmitError(err?.response?.data.message || err.message);
+        setSubmitError(err?.response?.data || err.message);
       });
   };
 
@@ -78,18 +79,17 @@ export default function Login() {
               {errors.password && <div className="text-danger">{errors.password.message}</div>}
             </div>
 
-            <div>
+            <div className="mb-8">
               <button className="w-full primary" type="submit" disabled={formState.isSubmitting}>
                 Submit
               </button>
 
-              {submitError && <div className="text-danger mt-3 mb-0">{submitError}</div>}
+              <FlashError error={submitError} />
             </div>
 
             <div>
-              <p>No account?</p>
               <p>
-                <Link href="/register">Register here</Link>
+                No account? <Link href="/register">Register here</Link>
               </p>
             </div>
           </form>

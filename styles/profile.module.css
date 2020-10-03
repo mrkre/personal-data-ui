@@ -6,6 +6,10 @@
   @apply px-2 py-4 align-middle;
 }
 
+.table > tbody > tr > td:first-child {
+  @apply w-1/4;
+}
+
 .table input {
   @apply mb-0;
 }
